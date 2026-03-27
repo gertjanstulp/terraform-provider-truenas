@@ -136,6 +136,14 @@ func TestCloudSyncTaskResource_Schema(t *testing.T) {
 		t.Error("expected 'include' attribute")
 	}
 
+	// Verify script attributes
+	if attrs["pre_script"] == nil {
+		t.Error("expected 'pre_script' attribute")
+	}
+	if attrs["post_script"] == nil {
+		t.Error("expected 'post_script' attribute")
+	}
+
 	// Verify blocks exist
 	blocks := schemaResp.Schema.Blocks
 	if blocks["schedule"] == nil {
@@ -185,6 +193,8 @@ type cloudSyncTaskModelParams struct {
 	BWLimit            interface{}
 	Exclude            []string
 	Include            []string
+	PreScript          string
+	PostScript         string
 	FollowSymlinks     bool
 	CreateEmptySrcDirs bool
 	Enabled            bool
@@ -278,6 +288,8 @@ func createCloudSyncTaskModelValue(p cloudSyncTaskModelParams) tftypes.Value {
 		"create_empty_src_dirs": tftypes.NewValue(tftypes.Bool, p.CreateEmptySrcDirs),
 		"enabled":               tftypes.NewValue(tftypes.Bool, p.Enabled),
 		"sync_on_change":        tftypes.NewValue(tftypes.Bool, p.SyncOnChange),
+		"pre_script":            tftypes.NewValue(tftypes.String, p.PreScript),
+		"post_script":           tftypes.NewValue(tftypes.String, p.PostScript),
 	}
 
 	// Handle exclude list
@@ -379,6 +391,8 @@ func createCloudSyncTaskModelValue(p cloudSyncTaskModelParams) tftypes.Value {
 			"bwlimit":               tftypes.String,
 			"exclude":               tftypes.List{ElementType: tftypes.String},
 			"include":               tftypes.List{ElementType: tftypes.String},
+			"pre_script":            tftypes.String,
+			"post_script":           tftypes.String,
 			"follow_symlinks":       tftypes.Bool,
 			"create_empty_src_dirs": tftypes.Bool,
 			"enabled":               tftypes.Bool,
@@ -420,6 +434,8 @@ func testCloudSyncTask(id int64, description string) *truenas.CloudSyncTask {
 		FollowSymlinks:     false,
 		CreateEmptySrcDirs: false,
 		Enabled:            true,
+		PreScript:          "prescript",
+		PostScript:         "postscript",
 	}
 }
 
@@ -457,6 +473,8 @@ func TestCloudSyncTaskResource_Create_S3_Success(t *testing.T) {
 			Bucket: "my-bucket",
 			Folder: "/backups/",
 		},
+		PreScript:  "prescript",
+		PostScript: "postscript",
 	})
 
 	req := resource.CreateRequest{
@@ -493,6 +511,12 @@ func TestCloudSyncTaskResource_Create_S3_Success(t *testing.T) {
 	}
 	if capturedOpts.CredentialID != 5 {
 		t.Errorf("expected credential ID 5, got %d", capturedOpts.CredentialID)
+	}
+	if capturedOpts.PreScript != "prescript" {
+		t.Errorf("expected pre_script 'prescript', got %q", capturedOpts.PreScript)
+	}
+	if capturedOpts.PostScript != "postscript" {
+		t.Errorf("expected post_script 'postscript', got %q", capturedOpts.PostScript)
 	}
 
 	// Verify schedule
@@ -564,6 +588,8 @@ func TestCloudSyncTaskResource_Create_B2_Success(t *testing.T) {
 			Bucket: "b2-bucket",
 			Folder: "/b2-backups/",
 		},
+		PreScript:  "prescript",
+		PostScript: "postscript",
 	})
 
 	req := resource.CreateRequest{
@@ -597,6 +623,12 @@ func TestCloudSyncTaskResource_Create_B2_Success(t *testing.T) {
 	}
 	if capturedOpts.TransferMode != "COPY" {
 		t.Errorf("expected transfer_mode 'COPY', got %q", capturedOpts.TransferMode)
+	}
+	if capturedOpts.PreScript != "prescript" {
+		t.Errorf("expected pre_script 'prescript', got %q", capturedOpts.PreScript)
+	}
+	if capturedOpts.PostScript != "postscript" {
+		t.Errorf("expected post_script 'postscript', got %q", capturedOpts.PostScript)
 	}
 
 	// Verify schedule
@@ -668,6 +700,8 @@ func TestCloudSyncTaskResource_Create_GCS_Success(t *testing.T) {
 			Bucket: "gcs-bucket",
 			Folder: "/gcs-backups/",
 		},
+		PreScript:  "prescript",
+		PostScript: "postscript",
 	})
 
 	req := resource.CreateRequest{
@@ -701,6 +735,12 @@ func TestCloudSyncTaskResource_Create_GCS_Success(t *testing.T) {
 	}
 	if capturedOpts.TransferMode != "MOVE" {
 		t.Errorf("expected transfer_mode 'MOVE', got %q", capturedOpts.TransferMode)
+	}
+	if capturedOpts.PreScript != "prescript" {
+		t.Errorf("expected pre_script 'prescript', got %q", capturedOpts.PreScript)
+	}
+	if capturedOpts.PostScript != "postscript" {
+		t.Errorf("expected post_script 'postscript', got %q", capturedOpts.PostScript)
 	}
 
 	// Verify schedule
@@ -774,6 +814,8 @@ func TestCloudSyncTaskResource_Create_Azure_Success(t *testing.T) {
 			Container: "azure-container",
 			Folder:    "/azure-backups/",
 		},
+		PreScript:  "prescript",
+		PostScript: "postscript",
 	})
 
 	req := resource.CreateRequest{
@@ -810,6 +852,12 @@ func TestCloudSyncTaskResource_Create_Azure_Success(t *testing.T) {
 	}
 	if capturedOpts.Snapshot != true {
 		t.Errorf("expected snapshot true, got %v", capturedOpts.Snapshot)
+	}
+	if capturedOpts.PreScript != "prescript" {
+		t.Errorf("expected pre_script 'prescript', got %q", capturedOpts.PreScript)
+	}
+	if capturedOpts.PostScript != "postscript" {
+		t.Errorf("expected post_script 'postscript', got %q", capturedOpts.PostScript)
 	}
 
 	// Verify schedule

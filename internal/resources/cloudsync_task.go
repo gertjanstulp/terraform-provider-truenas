@@ -46,6 +46,8 @@ type CloudSyncTaskResourceModel struct {
 	B2                 *TaskB2Block     `tfsdk:"b2"`
 	GCS                *TaskGCSBlock    `tfsdk:"gcs"`
 	Azure              *TaskAzureBlock  `tfsdk:"azure"`
+	PreScript          types.String     `tfsdk:"pre_script"`
+	PostScript         types.String     `tfsdk:"post_script"`
 }
 
 // ScheduleBlock represents cron schedule settings.
@@ -183,6 +185,14 @@ func (r *CloudSyncTaskResource) Schema(ctx context.Context, req resource.SchemaR
 				Optional:    true,
 				Computed:    true,
 				Default:     booldefault.StaticBool(false),
+			},
+			"pre_script": schema.StringAttribute{
+				Description: "Script to execute before running sync.",
+				Optional:    true,
+			},
+			"post_script": schema.StringAttribute{
+				Description: "Script to execute after running sync.",
+				Optional:    true,
 			},
 		},
 		Blocks: map[string]schema.Block{
@@ -378,6 +388,8 @@ func buildCloudSyncTaskOpts(ctx context.Context, data *CloudSyncTaskResourceMode
 		FollowSymlinks:     data.FollowSymlinks.ValueBool(),
 		CreateEmptySrcDirs: data.CreateEmptySrcDirs.ValueBool(),
 		Enabled:            data.Enabled.ValueBool(),
+		PreScript:          data.PreScript.ValueString(),
+		PostScript:         data.PostScript.ValueString(),
 	}
 
 	// Handle BWLimit - parse string to []BwLimit
@@ -518,6 +530,8 @@ func mapTaskToModel(task *truenas.CloudSyncTask, data *CloudSyncTaskResourceMode
 	data.FollowSymlinks = types.BoolValue(task.FollowSymlinks)
 	data.CreateEmptySrcDirs = types.BoolValue(task.CreateEmptySrcDirs)
 	data.Enabled = types.BoolValue(task.Enabled)
+	data.PreScript = types.StringValue(task.PreScript)
+	data.PostScript = types.StringValue(task.PostScript)
 
 	// BWLimit is preserved from plan since API returns array format
 	// and we accept string format in Terraform
