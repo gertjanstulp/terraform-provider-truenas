@@ -13,12 +13,12 @@ Retrieves information about an existing TrueNAS ssh keypair.
 
 ```terraform
 # Retrieve information about an existing SSH keypair
-data "truenas_sshkeypair" "keypair" {
+data "truenas_ssh_keypair" "keypair" {
   name = "keypair"
 }
 
-output "sshkeypair_id" {
-  value = data.truenas_sshkeypair.keypair.id
+output "ssh_keypair_id" {
+  value = data.truenas_ssh_keypair.keypair.id
 }
 ```
 

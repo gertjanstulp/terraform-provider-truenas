@@ -20,8 +20,10 @@ type SSHKeyPairDataSource struct {
 
 // SSHKeyPairDataSourceModel describes the data source data model.
 type SSHKeyPairDataSourceModel struct {
-	ID   types.String `tfsdk:"id"`
-	Name types.String `tfsdk:"name"`
+	ID         types.String `tfsdk:"id"`
+	Name       types.String `tfsdk:"name"`
+	PublicKey  types.String `tfsdk:"public_key"`
+	PrivateKey types.String `tfsdk:"private_key"`
 }
 
 // NewSSHKeyPairDataSource creates a new SSHKeyPairDataSource.
@@ -30,7 +32,7 @@ func NewSSHKeyPairDataSource() datasource.DataSource {
 }
 
 func (d *SSHKeyPairDataSource) Metadata(ctx context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_sshkeypair"
+	resp.TypeName = req.ProviderTypeName + "_ssh_keypair"
 }
 
 func (d *SSHKeyPairDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
@@ -44,6 +46,14 @@ func (d *SSHKeyPairDataSource) Schema(ctx context.Context, req datasource.Schema
 			"name": schema.StringAttribute{
 				Description: "The name of the SSH keypair to look up.",
 				Required:    true,
+			},
+			"public_key": schema.StringAttribute{
+				Description: "The public key of the SSH keypair.",
+				Computed:    true,
+			},
+			"private_key": schema.StringAttribute{
+				Description: "The private key of the SSH keypair.",
+				Computed:    true,
 			},
 		},
 	}
@@ -93,6 +103,8 @@ func (d *SSHKeyPairDataSource) Read(ctx context.Context, req datasource.ReadRequ
 		if keyPair.Name == searchName {
 			data.ID = types.StringValue(fmt.Sprintf("%d", keyPair.ID))
 			data.Name = types.StringValue(keyPair.Name)
+			data.PublicKey = types.StringValue(keyPair.PublicKey)
+			data.PrivateKey = types.StringValue(keyPair.PrivateKey)
 			found = true
 			break
 		}

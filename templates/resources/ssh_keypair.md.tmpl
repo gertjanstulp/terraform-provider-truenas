@@ -9,8 +9,18 @@ description: |-
 
 {{ .Description | trimspace }}
 
+-> Requires TrueNAS 25.0 or later.
+
 ## Example Usage
 
-{{ tffile "examples/data-sources/sshkeypair/main.tf" }}
+{{ tffile "examples/resources/ssh_keypair/main.tf" }}
+
+## Import
+
+SSH keypairs can be imported using the numeric ID:
+
+```shell
+terraform import truenas_ssh_keypair.example 1
+```
 
 {{ .SchemaMarkdown | trimspace }}
