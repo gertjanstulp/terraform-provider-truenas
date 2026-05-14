@@ -39,4 +39,5 @@ require (
 	google.golang.org/protobuf v1.36.9 // indirect
 )
 
-replace github.com/deevus/truenas-go => github.com/gertjanstulp/truenas-go v0.5.1
+replace github.com/deevus/truenas-go => /home/gstulp/git/personal/truenas-go
+// replace github.com/deevus/truenas-go => github.com/gertjanstulp/truenas-go v0.5.1
