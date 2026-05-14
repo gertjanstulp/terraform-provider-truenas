@@ -1,11 +1,11 @@
 ---
-page_title: "truenas_sshkeypair Data Source - terraform-provider-truenas"
+page_title: "truenas_ssh_keypair Data Source - terraform-provider-truenas"
 subcategory: ""
 description: |-
   Retrieves information about an existing TrueNAS ssh keypair.
 ---
 
-# truenas_sshkeypair (Data Source)
+# truenas_ssh_keypair (Data Source)
 
 Retrieves information about an existing TrueNAS ssh keypair.
 
@@ -32,3 +32,5 @@ output "ssh_keypair_id" {
 ### Read-Only
 
 - `id` (String) The unique identifier of the SSH keypair.
+- `private_key` (String, Sensitive) The private key of the SSH keypair.
+- `public_key` (String, Sensitive) The public key of the SSH keypair.

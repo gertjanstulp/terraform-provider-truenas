@@ -417,5 +417,6 @@ func (p *TrueNASProvider) Resources(ctx context.Context) []func() resource.Resou
 		resources.NewAppRegistryResource,
 		resources.NewVMResource,
 		resources.NewZvolResource,
+		resources.NewSSHKeyPairResource,
 	}
 }

@@ -50,10 +50,12 @@ func (d *SSHKeyPairDataSource) Schema(ctx context.Context, req datasource.Schema
 			"public_key": schema.StringAttribute{
 				Description: "The public key of the SSH keypair.",
 				Computed:    true,
+				Sensitive:   true,
 			},
 			"private_key": schema.StringAttribute{
 				Description: "The private key of the SSH keypair.",
 				Computed:    true,
+				Sensitive:   true,
 			},
 		},
 	}

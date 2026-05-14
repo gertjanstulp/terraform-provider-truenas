@@ -21,10 +21,10 @@ var (
 
 // SSHKeyPairResourceModel describes the resource data model.
 type SSHKeyPairResourceModel struct {
-	ID         types.String   `tfsdk:"id"`
-	Name       types.String   `tfsdk:"name"`
-	PublicKey  types.String   `tfsdk:"public_key"`
-	PrivateKey types.String   `tfsdk:"private_key"`
+	ID         types.String `tfsdk:"id"`
+	Name       types.String `tfsdk:"name"`
+	PublicKey  types.String `tfsdk:"public_key"`
+	PrivateKey types.String `tfsdk:"private_key"`
 }
 
 // SSHKeyPairResource defines the resource implementation.
@@ -59,10 +59,12 @@ func (r *SSHKeyPairResource) Schema(ctx context.Context, req resource.SchemaRequ
 			"public_key": schema.StringAttribute{
 				Description: "The public key of the SSH keypair.",
 				Required:    true,
+				Sensitive:   true,
 			},
 			"private_key": schema.StringAttribute{
 				Description: "The private key of the SSH keypair.",
 				Required:    true,
+				Sensitive:   true,
 			},
 		},
 	}
