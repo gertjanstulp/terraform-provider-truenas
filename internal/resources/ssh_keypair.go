@@ -91,7 +91,7 @@ func (r *SSHKeyPairResource) Create(ctx context.Context, req resource.CreateRequ
 
 	opts := buildSSHKeyPairOpts(&data)
 
-	keyPair, err := r.services.KeychainCredential.CreateSSHKeyPair(ctx, opts)
+	keyPair, err := r.services.SSH.CreateSSHKeyPair(ctx, opts)
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Unable to Create SSH Keypair",
@@ -130,7 +130,7 @@ func (r *SSHKeyPairResource) Read(ctx context.Context, req resource.ReadRequest,
 		return
 	}
 
-	keyPair, err := r.services.KeychainCredential.GetSSHKeyPair(ctx, id)
+	keyPair, err := r.services.SSH.GetSSHKeyPair(ctx, id)
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Unable to Read SSH Keypair",
@@ -172,7 +172,7 @@ func (r *SSHKeyPairResource) Update(ctx context.Context, req resource.UpdateRequ
 
 	opts := buildSSHKeyPairOpts(&plan)
 
-	keyPair, err := r.services.KeychainCredential.UpdateSSHKeyPair(ctx, id, opts)
+	keyPair, err := r.services.SSH.UpdateSSHKeyPair(ctx, id, opts)
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Unable to Update SSH Keypair",
@@ -212,7 +212,7 @@ func (r *SSHKeyPairResource) Delete(ctx context.Context, req resource.DeleteRequ
 		return
 	}
 
-	err = r.services.KeychainCredential.DeleteSSHKeyPair(ctx, id)
+	err = r.services.SSH.DeleteSSHKeyPair(ctx, id)
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Unable to Delete SSH Keypair",

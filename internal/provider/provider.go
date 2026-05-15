@@ -375,16 +375,16 @@ func (p *TrueNASProvider) Configure(ctx context.Context, req provider.ConfigureR
 	// Build service registry
 	version := finalClient.Version()
 	svc := &services.TrueNASServices{
-		Client:             finalClient,
-		App:                truenas.NewAppService(finalClient, version),
-		CloudSync:          truenas.NewCloudSyncService(finalClient, version),
-		Cron:               truenas.NewCronService(finalClient, version),
-		Dataset:            truenas.NewDatasetService(finalClient, version),
-		Filesystem:         truenas.NewFilesystemService(finalClient, version),
-		Snapshot:           truenas.NewSnapshotService(finalClient, version),
-		Virt:               truenas.NewVirtService(finalClient, version),
-		VM:                 truenas.NewVMService(finalClient, version),
-		KeychainCredential: truenas.NewKeychainCredentialService(finalClient, version),
+		Client:     finalClient,
+		App:        truenas.NewAppService(finalClient, version),
+		CloudSync:  truenas.NewCloudSyncService(finalClient, version),
+		Cron:       truenas.NewCronService(finalClient, version),
+		Dataset:    truenas.NewDatasetService(finalClient, version),
+		Filesystem: truenas.NewFilesystemService(finalClient, version),
+		Snapshot:   truenas.NewSnapshotService(finalClient, version),
+		Virt:       truenas.NewVirtService(finalClient, version),
+		VM:         truenas.NewVMService(finalClient, version),
+		SSH:        truenas.NewSSHService(finalClient, version),
 	}
 
 	resp.DataSourceData = svc
@@ -399,6 +399,7 @@ func (p *TrueNASProvider) DataSources(ctx context.Context) []func() datasource.D
 		datasources.NewCloudSyncCredentialsDataSource,
 		datasources.NewVirtConfigDataSource,
 		datasources.NewSSHKeyPairDataSource,
+		datasources.NewSSHConnectionDataSource,
 	}
 }
 
@@ -418,5 +419,6 @@ func (p *TrueNASProvider) Resources(ctx context.Context) []func() resource.Resou
 		resources.NewVMResource,
 		resources.NewZvolResource,
 		resources.NewSSHKeyPairResource,
+		resources.NewSSHConnectionResource,
 	}
 }

@@ -1,0 +1,26 @@
+---
+page_title: "{{.Name}} {{.Type}} - {{.ProviderName}}"
+subcategory: ""
+description: |-
+{{ .Description | plainmarkdown | trimspace | prefixlines "  " }}
+---
+
+# {{.Name}} ({{.Type}})
+
+{{ .Description | trimspace }}
+
+-> Requires TrueNAS 25.0 or later.
+
+## Example Usage
+
+{{ tffile "examples/resources/ssh_connection/main.tf" }}
+
+## Import
+
+SSH credentials can be imported using the numeric ID:
+
+```shell
+terraform import truenas_ssh_connection.example 1
+```
+
+{{ .SchemaMarkdown | trimspace }}

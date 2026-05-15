@@ -88,8 +88,8 @@ func (d *SSHKeyPairDataSource) Read(ctx context.Context, req datasource.ReadRequ
 		return
 	}
 
-	// List all credentials via the service
-	keyPairs, err := d.services.KeychainCredential.ListSSHKeyPairs(ctx)
+	// List all keypairs via the service
+	keyPairs, err := d.services.SSH.ListSSHKeyPairs(ctx)
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Unable to Read SSH KeyPairs",
@@ -114,7 +114,7 @@ func (d *SSHKeyPairDataSource) Read(ctx context.Context, req datasource.ReadRequ
 
 	if !found {
 		resp.Diagnostics.AddError(
-			"SSH keypair Not Found",
+			"SSH Keypair Not Found",
 			fmt.Sprintf("SSH keypair %q was not found.", searchName),
 		)
 		return

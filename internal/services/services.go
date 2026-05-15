@@ -13,13 +13,13 @@ type TrueNASServices struct {
 	// Remove this field once all resources use typed service methods.
 	Client client.Client
 
-	App                truenas.AppServiceAPI
-	CloudSync          truenas.CloudSyncServiceAPI
-	Cron               truenas.CronServiceAPI
-	Dataset            truenas.DatasetServiceAPI
-	Filesystem         truenas.FilesystemServiceAPI
-	Snapshot           truenas.SnapshotServiceAPI
-	Virt               truenas.VirtServiceAPI
-	VM                 truenas.VMServiceAPI
-	KeychainCredential truenas.KeychainCredentialServiceAPI
+	App        truenas.AppServiceAPI
+	CloudSync  truenas.CloudSyncServiceAPI
+	Cron       truenas.CronServiceAPI
+	Dataset    truenas.DatasetServiceAPI
+	Filesystem truenas.FilesystemServiceAPI
+	Snapshot   truenas.SnapshotServiceAPI
+	Virt       truenas.VirtServiceAPI
+	VM         truenas.VMServiceAPI
+	SSH        truenas.SSHServiceAPI
 }
