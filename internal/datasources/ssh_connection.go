@@ -22,12 +22,12 @@ type SSHConnectionDataSource struct {
 type SSHConnectionDataSourceModel struct {
 	ID             types.String `tfsdk:"id"`
 	Name           types.String `tfsdk:"name"`
-	Host           types.String `tfsdk:"name"`
-	Port           types.Int32  `tfsdk:"name"`
-	Username       types.String `tfsdk:"name"`
-	PrivateKeyID   types.Int64  `tfsdk:"name"`
-	RemoteHostKey  types.String `tfsdk:"name"`
-	ConnectTimeout types.Int32  `tfsdk:"name"`
+	Host           types.String `tfsdk:"host"`
+	Port           types.Int32  `tfsdk:"port"`
+	Username       types.String `tfsdk:"username"`
+	PrivateKeyID   types.Int64  `tfsdk:"private_key_id"`
+	RemoteHostKey  types.String `tfsdk:"remote_host_key"`
+	ConnectTimeout types.Int32  `tfsdk:"connect_timeout"`
 }
 
 // NewSSHConnectionDataSource creates a new SSHConnectionDataSource.
